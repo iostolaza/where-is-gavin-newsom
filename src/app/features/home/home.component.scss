@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding-top: 80px; /* space for fixed header */
+}
+
+google-map {
+  display: block;
+  border-radius: 1rem;
+  overflow: hidden;
+}
