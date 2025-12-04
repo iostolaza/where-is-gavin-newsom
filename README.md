@@ -57,3 +57,55 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+where-is-gavin-newsom/
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   │   ├── guards/auth.guard.ts
+│   │   │   ├── services/
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   ├── sighting.service.ts
+│   │   │   │   ├── notification.service.ts
+│   │   │   │   └── vision.service.ts
+│   │   │   └── interceptors/auth.interceptor.ts
+│   │   │
+│   │   ├── features/
+│   │   │   ├── home/
+│   │   │   │   ├── home.component.ts/html/scss
+│   │   │   ├── submit-sighting/
+│   │   │   ├── sighting-detail/
+│   │   │   ├── admin/
+│   │   │   │   └── admin-dashboard.component.ts/html   ← FULL MODERATION PANEL
+│   │   │   └── user-dashboard/
+│   │   │
+│   │   ├── shared/
+│   │   │   ├── components/
+│   │   │   │   ├── header.component.ts
+│   │   │   │   ├── post-button.component.ts/html   ← Big red floating button
+│   │   │   │   ├── sighting-card.component.ts
+│   │   │   │   └── google-map.component.ts         ← Clustering + InfoWindows
+│   │   │   └── models/sighting.model.ts
+│   │   │
+│   │   ├── app.component.html          ← Root with <app-post-button>
+│   │   └── app-routing.module.ts
+│   │
+│   ├── environments/
+│   │   ├── environment.ts
+│   │   └── environment.prod.ts
+│   │
+│   └── assets/
+│       └── icons/
+│
+├── functions/                           ← Cloud Functions (Node.js)
+│   ├── src/
+│   │   ├── index.ts                     ← Vision AI + Notifications + Moderation
+│   │   ├── vision.ts                    ← Google Vision: "Is Gavin Newsom in this photo?"
+│   │   └── notify.ts                    ← Push "Gavin spotted 5 min ago in LA!"
+│   └── package.json
+│
+├── firebase.json
+├── firestore.rules
+├── storage.rules
+└── angular.json

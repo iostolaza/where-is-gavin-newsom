@@ -1,7 +1,13 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-admin.initializeApp();
+import { analyzeImageForGavin } from './vision';
 
-export const helloWorld = functions.https.onRequest((req, res) => {
-  res.send("Gavin Vision AI + Notifications ready!");
+export const checkIfGavin = functions.https.onCall(async (data, context) => {
+  const { imageUrl } = data;
+  if (!imageUrl) return { valid: false, reason: 'No image URL' };
+
+  const isGavin = await analyzeImageForGavin(imageUrl);
+  return {
+    valid: isGavin,
+    message: isGavin ? 'Gavin confirmed!' : 'Not Gavin or unclear'
+  };
 });
