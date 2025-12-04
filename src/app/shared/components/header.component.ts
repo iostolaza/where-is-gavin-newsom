@@ -4,9 +4,14 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   standalone: true,
   template: `
-    <header class="fixed top-0 left-0 right-0 bg-gradient-to-r from-blue-900 to-blue-700 text-white shadow-lg z-40">
-      <div class="max-w-6xl mx-auto px-6 py-5">
-        <h1 class="text-3xl font-black">Where Is Gavin Newsom?</h1>
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-50">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-3xl font-black text-blue-900 tracking-tight">
+          Where Is Gavin Newsom?
+        </h1>
+        <div class="text-lg font-medium text-gray-700">
+          Citizen-Powered Tracker
+        </div>
       </div>
     </header>
   `

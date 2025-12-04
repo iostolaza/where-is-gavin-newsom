@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post-button',
   standalone: true,
+  imports: [RouterLink],
   template: `
-    <button (click)="go()" 
-      class="fixed bottom-8 right-8 z-50 bg-red-600 hover:bg-red-700 text-white rounded-full w-20 h-20 shadow-2xl flex items-center justify-center text-4xl font-bold">
+    <a routerLink="/submit"
+       class="fixed bottom-8 right-8 z-50 bg-red-600 hover:bg-red-700 text-white 
+              rounded-full w-16 h-16 shadow-2xl flex items-center justify-center
+              text-4xl font-black transition transform hover:scale-110">
       +
-    </button>
+    </a>
   `
 })
-export class PostButtonComponent {
-  constructor(private router: Router, private auth: AuthService) {}
-
-  go() {
-    this.router.navigate(['/submit']);
-  }
-}
+export class PostButtonComponent {}
