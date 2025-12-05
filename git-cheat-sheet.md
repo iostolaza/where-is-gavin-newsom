@@ -4,7 +4,7 @@
 # 1. Stage all changes
 git add .
 git status
-git commit -m "Search button added"
+git commit -m "Post and signing component"
 git push origin main
 
 # See what changed

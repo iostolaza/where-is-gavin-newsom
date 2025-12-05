@@ -1,15 +1,35 @@
+/* src/styles.scss – replace entire content */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Your design system (kept exactly as you wrote it)
+   ========================================================================== */
 @layer base {
   body {
-    @apply bg-gray-100 font-sans text-gray-800 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased;
   }
+  h1, h2, h3, h4 { @apply font-bold tracking-tight; }
+  h1 { @apply text-4xl md:text-5xl; }
+  h2 { @apply text-2xl md:text-3xl; }
 }
 
 @layer components {
-  .card {
-    @apply bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden transition-all hover:shadow-2xl;
-  }
+  .container-max   { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .section         { @apply py-12; }
+  .section-title   { @apply text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-3 mb-8; }
+  .grid-responsive { @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6; }
+  .card            { @apply bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1; }
+  .card-img        { @apply w-full h-64 object-cover; }
+  .card-body       { @apply p-6; }
+  .card-title      { @apply text-lg font-semibold text-gray-900 mb-2 line-clamp-2; }
+  .card-text        { @apply text-sm text-gray-600 leading-relaxed; }
+  .badge-offline   { @apply absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md; }
+  .btn            { @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary     { @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300; }
+  .btn-success     { @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-300; }
+  .btn-danger      { @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-300; }
+  .btn-lg          { @apply px-6 py-3 text-base; }
+  .btn-sm          { @apply px-4 py-2 text-sm; }
 }
