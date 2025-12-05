@@ -1,40 +1,25 @@
 <!-- CLEAN HEADER -->
 <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-50">
   <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-    <h1 class="text-3xl font-black text-blue-900 tracking-tight">
-      Where Is Gavin Newsom?
-    </h1>
+    
+    <!-- TITLE = SEARCH DROPDOWN TRIGGER -->
+    <app-search-dropdown></app-search-dropdown>
+    
+    <!-- RIGHT SIDE — CLEAN TRACKER TEXT -->
     <div class="text-lg font-medium text-gray-700">
       Citizen-Powered Tracker
     </div>
   </div>
 </header>
 
-<!-- HOVER SEARCH BAR — NOW WORKS PERFECTLY -->
-<div class="fixed top-20 left-0 right-0 bg-white border-b border-gray-200 shadow-md z-40 transition-all duration-300 opacity-0 hover:opacity-100 pointer-events-none hover:pointer-events-auto">
-  <div class="max-w-7xl mx-auto px-6 py-5">
-    <div class="flex items-center gap-6">
-      <div class="flex-1 relative">
-        <input 
-          type="text" 
-          placeholder="Search city, venue, or address..."
-          class="w-full px-6 py-5 pl-16 rounded-2xl border border-gray-300 focus:border-blue-600 focus:outline-none text-lg shadow-lg">
-        <svg class="absolute left-6 top-6 w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- MAIN CONTENT -->
-<main class="pt-24 pb-32">
+<main class="pt-28 pb-32">
 
-  <!-- MAP — FULL WIDTH, SAME AS CARDS -->
+  <!-- MAP — FULL WIDTH -->
   <section class="px-6 mb-24">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       <h2 class="text-4xl font-black mb-10 text-gray-800">Live Location Map</h2>
-      <div class="card overflow-hidden shadow-2xl">
+      <div class="card overflow-hidden shadow-2xl rounded-3xl">
         <google-map 
           height="700px" 
           width="100%" 
@@ -62,49 +47,47 @@
     </div>
   </section>
 
-  <!-- LATEST SIGHTING — HUGE, DOUBLE HEIGHT, CINEMATIC -->
-  <section class="px-6 mb-32" *ngIf="latest$ | async as latest">
+  <!-- LATEST SIGHTING — CLEAN CARD, LARGE IMAGE, TEXT BELOW -->
+<section class="px-6 mb-32" *ngIf="latest$ | async as latest">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl font-black mb-12 text-gray-800">Most Recent Sighting</h2>
-      <div class="card overflow-hidden shadow-2xl relative group">
-        <img [src]="latest.imageUrl" class="w-full h-96 md:h-screen max-h-screen object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 p-12 md:p-20 text-white">
-          <h3 class="text-5xl md:text-7xl font-black mb-8 leading-tight">{{ latest.title }}</h3>
-          <div class="flex items-center gap-6 text-2xl mb-10">
-            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-            <span class="font-bold">{{ latest.locationName }}</span>
+      
+      <div class="max-w-6xl mx-auto">
+        <div class="card rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition bg-white">
+          
+          <!-- IMAGE — CENTERED, CROPPED, WHITE SPACE ON SIDES -->
+          <div class="relative h-96 md:h-[36rem] bg-gray-50 overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <img 
+                [src]="latest.imageUrl"
+                class="max-w-full max-h-full object-cover"
+                alt="{{ latest.title }}">
+            </div>
           </div>
-          <p class="text-2xl md:text-3xl opacity-95 max-w-5xl leading-relaxed mb-10">{{ latest.description }}</p>
-          <div class="flex items-center justify-between">
-            <span class="text-3xl font-bold">
-              Spotted {{ latest.sightedAt | timeAgo }}
-            </span>
-            <span class="bg-green-500 text-white px-10 py-5 rounded-full text-2xl font-black shadow-2xl">
-              VERIFIED
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </section>
 
-  <!-- RECENT SIGHTINGS — 90% WIDTH, HORIZONTAL, BEAUTIFUL -->
-  <section class="px-6">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-black mb-12 text-gray-800">Recent Sightings</h2>
-      <div class="max-w-6xl mx-auto space-y-12">
-        <div *ngFor="let s of (sightings$ | async)" class="card hover:shadow-2xl transition">
-          <div class="flex flex-col lg:flex-row gap-10">
-            <img [src]="s.imageUrl" class="w-full lg:w-96 h-80 object-cover rounded-2xl">
-            <div class="flex-1 py-8">
-              <h4 class="text-3xl font-bold text-gray-900 mb-4">{{ s.title }}</h4>
-              <p class="text-2xl text-blue-600 font-medium mb-6">{{ s.locationName }}</p>
-              <p class="text-xl text-gray-700 leading-relaxed mb-8">{{ s.description }}</p>
-              <div class="flex items-center justify-between pt-8 border-t border-gray-200">
-                <span class="text-lg text-gray-500">{{ s.sightedAt | timeAgo }}</span>
-                <span class="bg-blue-100 text-blue-800 px-6 py-3 rounded-full text-lg font-semibold">Citizen Report</span>
+          <!-- TEXT BELOW — CENTERED, SAME STYLE AS RECENT CARDS -->
+          <div class="p-8 md:p-8 text-center">
+            <h3 class="text-2xl lg:text-2xl font-bold text-gray-900 mb-6 leading-tight">
+              {{ latest.title }}
+            </h3>
+
+            <p class="text-2xl text-blue-600 font-medium mb-8">
+              {{ latest.locationName }}
+            </p>
+
+            <p class="text-xl text-gray-700 leading-relaxed mb-8 max-w-4xl mx-auto">
+              {{ latest.description }}
+            </p>
+
+            <div class="pt-8 border-t-2 border-gray-200">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-lg text-gray-500 font-medium">
+                  Spotted {{ latest.sightedAt | timeAgo }}
+                </span>
+                <span class="bg-emerald-600 text-white 
+                               px-10 py-5 rounded-full text-xl font-black shadow-2xl">
+                  VERIFIED
+                </span>
               </div>
             </div>
           </div>
@@ -112,12 +95,59 @@
       </div>
     </div>
   </section>
+
+  <!-- RECENT SIGHTINGS — CLEAN HORIZONTAL CARDS -->
+<section class="px-6">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl font-black mb-12 text-gray-800">Recent Sightings</h2>
+      <div class="max-w-6xl mx-auto space-y-12">
+        <div *ngFor="let s of (sightings$ | async)" 
+             class="card rounded-3xl overflow-hidden hover:shadow-2xl transition bg-white">
+          
+          <!-- FIXED HEIGHT CARD — ALWAYS SAME SIZE -->
+          <div class="flex flex-col lg:flex-row h-96 lg:h-80">
+            
+            <!-- IMAGE — CROPPED, ALWAYS FITS -->
+            <div class="w-full lg:w-96 h-64 lg:h-full relative overflow-hidden">
+              <img [src]="s.imageUrl" 
+                   class="absolute inset-0 w-full h-full object-cover"
+                   alt="{{ s.title }}">
+            </div>
+
+            <!-- TEXT — ALWAYS SAME HEIGHT, PERFECT ALIGNMENT -->
+            <div class="flex-1 flex flex-col justify-between p-8 lg:p-10">
+              <div>
+                <h4 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{{ s.title }}</h4>
+                <p class="text-xl lg:text-2xl text-blue-600 font-medium mb-4">{{ s.locationName }}</p>
+                <p class="text-base lg:text-lg text-gray-700 leading-relaxed line-clamp-3 lg:line-clamp-4">
+                  {{ s.description }}
+                </p>
+              </div>
+
+              <div class="pt-6 border-t-2 border-gray-200">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 font-medium">
+                    {{ s.sightedAt | timeAgo }}
+                  </span>
+                  <span class="bg-blue-600 text-white 
+                                 px-6 py-3 rounded-full text-lg font-bold shadow-lg">
+                    Citizen Report
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<!-- GREEN FLOATING POST BUTTON -->
+<!-- GREEN POST BUTTON -->
 <a routerLink="/submit"
    class="fixed bottom-10 right-10 z-50 bg-green-600 hover:bg-green-700 text-white 
           rounded-full w-20 h-20 shadow-2xl flex items-center justify-center
-          text-6xl font-black transition transform hover:scale-110 hover:rotate-90">
+          text-6xl font-black transition transform hover:scale-110">
   +
 </a>

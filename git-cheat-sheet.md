@@ -4,7 +4,7 @@
 # 1. Stage all changes
 git add .
 git status
-git commit -m "Edited home layout"
+git commit -m "Search button added"
 git push origin main
 
 # See what changed
