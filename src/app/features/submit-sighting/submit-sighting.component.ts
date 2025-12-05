@@ -1,7 +1,7 @@
 // file: src/app/features/submit-sighting/submit-sighting.component.ts
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 import { AuthService } from '../../core/services/auth.service';
 import { SightingService } from '../../core/services/sighting.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Sighting } from '../../shared/models/sighting.model';
 
 @Component({
     selector: 'app-submit-sighting',
-    imports: [ReactiveFormsModule, NgIf],
+    imports: [ReactiveFormsModule],
     templateUrl: './submit-sighting.component.html',
     styleUrls: ['./submit-sighting.component.scss']
 })

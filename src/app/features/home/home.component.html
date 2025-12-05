@@ -1,10 +1,10 @@
 <!-- CLEAN HEADER -->
 <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-50">
   <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-    
+
     <!-- TITLE = SEARCH DROPDOWN TRIGGER -->
     <app-search-dropdown></app-search-dropdown>
-    
+
     <!-- RIGHT SIDE — CLEAN TRACKER TEXT -->
     <div class="text-lg font-medium text-gray-700">
       Citizen-Powered Tracker
@@ -20,27 +20,30 @@
     <div class="max-w-6xl mx-auto">
       <h2 class="text-4xl font-black mb-10 text-gray-800">Live Location Map</h2>
       <div class="card overflow-hidden shadow-2xl rounded-3xl">
-        <google-map 
-          height="700px" 
-          width="100%" 
-          [center]="mapCenter" 
-          [zoom]="6.5" 
+        <google-map
+          height="700px"
+          width="100%"
+          [center]="mapCenter"
+          [zoom]="6.5"
           [options]="mapOptions">
-          
-          <map-marker
-            *ngFor="let s of (sightings$ | async)"
-            [position]="{ lat: s.lat, lng: s.lng }"
-            (mapClick)="openInfoWindow(marker, s)"
-            #marker="mapMarker">
-          </map-marker>
+
+          @for (s of (sightings$ | async); track s) {
+            <map-marker
+              [position]="{ lat: s.lat, lng: s.lng }"
+              (mapClick)="openInfoWindow(marker, s)"
+              #marker="mapMarker">
+            </map-marker>
+          }
 
           <map-info-window>
-            <div class="p-6 max-w-md" *ngIf="selectedSighting">
-              <img [src]="selectedSighting.imageUrl" class="w-full h-56 object-cover rounded-2xl mb-6">
-              <h4 class="text-2xl font-bold">{{ selectedSighting.title }}</h4>
-              <p class="text-gray-600 mt-3 text-lg">{{ selectedSighting.locationName }}</p>
-              <p class="text-gray-500 mt-4">{{ selectedSighting.sightedAt | timeAgo }}</p>
-            </div>
+            @if (selectedSighting) {
+              <div class="p-6 max-w-md">
+                <img [src]="selectedSighting.imageUrl" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h4 class="text-2xl font-bold">{{ selectedSighting.title }}</h4>
+                <p class="text-gray-600 mt-3 text-lg">{{ selectedSighting.locationName }}</p>
+                <p class="text-gray-500 mt-4">{{ selectedSighting.sightedAt | timeAgo }}</p>
+              </div>
+            }
           </map-info-window>
         </google-map>
       </div>
@@ -48,96 +51,90 @@
   </section>
 
   <!-- LATEST SIGHTING — CLEAN CARD, LARGE IMAGE, TEXT BELOW -->
-<section class="px-6 mb-32" *ngIf="latest$ | async as latest">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-black mb-12 text-gray-800">Most Recent Sighting</h2>
-      
-      <div class="max-w-6xl mx-auto">
-        <div class="card rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition bg-white">
-          
-          <!-- IMAGE — CENTERED, CROPPED, WHITE SPACE ON SIDES -->
-          <div class="relative h-96 md:h-[36rem] bg-gray-50 overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <img 
-                [src]="latest.imageUrl"
-                class="max-w-full max-h-full object-cover"
-                alt="{{ latest.title }}">
+  @if (latest$ | async; as latest) {
+    <section class="px-6 mb-32">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-black mb-12 text-gray-800">Most Recent Sighting</h2>
+        <div class="max-w-6xl mx-auto">
+          <div class="card rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition bg-white">
+            <!-- IMAGE — CENTERED, CROPPED, WHITE SPACE ON SIDES -->
+            <div class="relative h-96 md:h-[36rem] bg-gray-50 overflow-hidden">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <img
+                  [src]="latest.imageUrl"
+                  class="max-w-full max-h-full object-cover"
+                  alt="{{ latest.title }}">
+              </div>
             </div>
-          </div>
-
-          <!-- TEXT BELOW — CENTERED, SAME STYLE AS RECENT CARDS -->
-          <div class="p-8 md:p-8 text-center">
-            <h3 class="text-2xl lg:text-2xl font-bold text-gray-900 mb-6 leading-tight">
-              {{ latest.title }}
-            </h3>
-
-            <p class="text-2xl text-blue-600 font-medium mb-8">
-              {{ latest.locationName }}
-            </p>
-
-            <p class="text-xl text-gray-700 leading-relaxed mb-8 max-w-4xl mx-auto">
-              {{ latest.description }}
-            </p>
-
-            <div class="pt-8 border-t-2 border-gray-200">
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <span class="text-lg text-gray-500 font-medium">
-                  Spotted {{ latest.sightedAt | timeAgo }}
-                </span>
+            <!-- TEXT BELOW — CENTERED, SAME STYLE AS RECENT CARDS -->
+            <div class="p-8 md:p-8 text-center">
+              <h3 class="text-2xl lg:text-2xl font-bold text-gray-900 mb-6 leading-tight">
+                {{ latest.title }}
+              </h3>
+              <p class="text-2xl text-blue-600 font-medium mb-8">
+                {{ latest.locationName }}
+              </p>
+              <p class="text-xl text-gray-700 leading-relaxed mb-8 max-w-4xl mx-auto">
+                {{ latest.description }}
+              </p>
+              <div class="pt-8 border-t-2 border-gray-200">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <span class="text-lg text-gray-500 font-medium">
+                    Spotted {{ latest.sightedAt | timeAgo }}
+                  </span>
                 <span class="bg-emerald-600 text-white 
                                px-10 py-5 rounded-full text-xl font-black shadow-2xl">
-                  VERIFIED
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RECENT SIGHTINGS — CLEAN HORIZONTAL CARDS -->
-<section class="px-6">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-black mb-12 text-gray-800">Recent Sightings</h2>
-      <div class="max-w-6xl mx-auto space-y-12">
-        <div *ngFor="let s of (sightings$ | async)" 
-             class="card rounded-3xl overflow-hidden hover:shadow-2xl transition bg-white">
-          
-          <!-- FIXED HEIGHT CARD — ALWAYS SAME SIZE -->
-          <div class="flex flex-col lg:flex-row h-96 lg:h-80">
-            
-            <!-- IMAGE — CROPPED, ALWAYS FITS -->
-            <div class="w-full lg:w-96 h-64 lg:h-full relative overflow-hidden">
-              <img [src]="s.imageUrl" 
-                   class="absolute inset-0 w-full h-full object-cover"
-                   alt="{{ s.title }}">
-            </div>
-
-            <!-- TEXT — ALWAYS SAME HEIGHT, PERFECT ALIGNMENT -->
-            <div class="flex-1 flex flex-col justify-between p-8 lg:p-10">
-              <div>
-                <h4 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{{ s.title }}</h4>
-                <p class="text-xl lg:text-2xl text-blue-600 font-medium mb-4">{{ s.locationName }}</p>
-                <p class="text-base lg:text-lg text-gray-700 leading-relaxed line-clamp-3 lg:line-clamp-4">
-                  {{ s.description }}
-                </p>
-              </div>
-
-              <div class="pt-6 border-t-2 border-gray-200">
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-500 font-medium">
-                    {{ s.sightedAt | timeAgo }}
-                  </span>
-                  <span class="bg-blue-600 text-white 
-                                 px-6 py-3 rounded-full text-lg font-bold shadow-lg">
-                    Citizen Report
+                    VERIFIED
                   </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  }
+
+  <!-- RECENT SIGHTINGS — CLEAN HORIZONTAL CARDS -->
+  <section class="px-6">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl font-black mb-12 text-gray-800">Recent Sightings</h2>
+      <div class="max-w-6xl mx-auto space-y-12">
+        @for (s of (sightings$ | async); track s) {
+          <div
+            class="card rounded-3xl overflow-hidden hover:shadow-2xl transition bg-white">
+            <!-- FIXED HEIGHT CARD — ALWAYS SAME SIZE -->
+            <div class="flex flex-col lg:flex-row h-96 lg:h-80">
+              <!-- IMAGE — CROPPED, ALWAYS FITS -->
+              <div class="w-full lg:w-96 h-64 lg:h-full relative overflow-hidden">
+                <img [src]="s.imageUrl"
+                  class="absolute inset-0 w-full h-full object-cover"
+                  alt="{{ s.title }}">
+              </div>
+              <!-- TEXT — ALWAYS SAME HEIGHT, PERFECT ALIGNMENT -->
+              <div class="flex-1 flex flex-col justify-between p-8 lg:p-10">
+                <div>
+                  <h4 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{{ s.title }}</h4>
+                  <p class="text-xl lg:text-2xl text-blue-600 font-medium mb-4">{{ s.locationName }}</p>
+                  <p class="text-base lg:text-lg text-gray-700 leading-relaxed line-clamp-3 lg:line-clamp-4">
+                    {{ s.description }}
+                  </p>
+                </div>
+                <div class="pt-6 border-t-2 border-gray-200">
+                  <div class="flex items-center justify-between">
+                    <span class="text-gray-500 font-medium">
+                      {{ s.sightedAt | timeAgo }}
+                    </span>
+                  <span class="bg-blue-600 text-white 
+                                 px-6 py-3 rounded-full text-lg font-bold shadow-lg">
+                      Citizen Report
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       </div>
     </div>
   </section>

@@ -11,28 +11,29 @@
     </h2>
 
     <div class="grid-responsive">
-      <article *ngFor="let s of pendingSightings()" class="card relative">
-        <img [src]="s.imageUrl" [alt]="s.title" class="card-img">
-        <div class="card-body">
-          <h3 class="card-title">{{ s.title }}</h3>
-          <p class="card-text mb-4">{{ s.description }}</p>
-          <p class="text-sm text-gray-500 mb-1">
-            <strong>Location:</strong> {{ s.locationName || 'Unknown' }}
-          </p>
-          <p class="text-sm text-gray-500">
-            <strong>Spotted:</strong> {{ s.sightedAt | date:'medium' }}
-          </p>
-
-          <div class="flex gap-3 mt-6">
-            <button (click)="approveSighting(s.id!)" class="btn btn-success btn-sm flex-1">
-              Approve
-            </button>
-            <button (click)="rejectSighting(s.id!)" class="btn btn-danger btn-sm flex-1">
-              Reject
-            </button>
+      @for (s of pendingSightings(); track s) {
+        <article class="card relative">
+          <img [src]="s.imageUrl" [alt]="s.title" class="card-img">
+          <div class="card-body">
+            <h3 class="card-title">{{ s.title }}</h3>
+            <p class="card-text mb-4">{{ s.description }}</p>
+            <p class="text-sm text-gray-500 mb-1">
+              <strong>Location:</strong> {{ s.locationName || 'Unknown' }}
+            </p>
+            <p class="text-sm text-gray-500">
+              <strong>Spotted:</strong> {{ s.sightedAt | date:'medium' }}
+            </p>
+            <div class="flex gap-3 mt-6">
+              <button (click)="approveSighting(s.id!)" class="btn btn-success btn-sm flex-1">
+                Approve
+              </button>
+              <button (click)="rejectSighting(s.id!)" class="btn btn-danger btn-sm flex-1">
+                Reject
+              </button>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      }
     </div>
   </section>
 
@@ -43,19 +44,21 @@
     </h2>
 
     <div class="grid-responsive">
-      <article *ngFor="let s of approvedSightings()" class="card relative">
-        <img [src]="s.imageUrl" [alt]="s.title" class="card-img">
-        <div class="card-body">
-          <h3 class="card-title">{{ s.title }}</h3>
-          <p class="card-text mb-4">{{ s.description }}</p>
-          <p class="text-sm text-gray-500 mb-1">
-            <strong>Location:</strong> {{ s.locationName || 'Unknown' }}
-          </p>
-          <p class="text-sm text-gray-500">
-            <strong>Spotted:</strong> {{ s.sightedAt | date:'medium' }}
-          </p>
-        </div>
-      </article>
+      @for (s of approvedSightings(); track s) {
+        <article class="card relative">
+          <img [src]="s.imageUrl" [alt]="s.title" class="card-img">
+          <div class="card-body">
+            <h3 class="card-title">{{ s.title }}</h3>
+            <p class="card-text mb-4">{{ s.description }}</p>
+            <p class="text-sm text-gray-500 mb-1">
+              <strong>Location:</strong> {{ s.locationName || 'Unknown' }}
+            </p>
+            <p class="text-sm text-gray-500">
+              <strong>Spotted:</strong> {{ s.sightedAt | date:'medium' }}
+            </p>
+          </div>
+        </article>
+      }
     </div>
   </section>
 </div>

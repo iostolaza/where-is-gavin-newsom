@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-search-dropdown',
-    imports: [CommonModule, RouterLink],
+    imports: [RouterLink],
     template: `
     <div class="relative">
       <!-- TITLE = SEARCH TRIGGER -->
