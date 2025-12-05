@@ -70,3 +70,6 @@ npx tailwindcss init -p
 
 # Step 8: Launch the app (it will auto-open in browser)
 ng serve --open
+
+# Remove old floating button from AppComponent
+sed -i '' '/<app-post-button>/d' src/app/app.component.html
