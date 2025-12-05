@@ -3,11 +3,8 @@
 
 # 1. Stage all changes
 git add .
-
-# 2. Commit with a message
-git commit -m "Your message here"
-
-# 3. Push to GitHub
+git status
+git commit -m "Edited home layout"
 git push origin main
 
 # See what changed
