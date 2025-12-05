@@ -1,6 +1,5 @@
-<!-- src/app/features/admin/admin-dashboard.component.html -->
+<!-- file: src/app/features/admin/admin-dashboard.component.html -->
 <div class="container-max">
-
   <h1 class="text-center text-4xl md:text-5xl font-bold text-gray-800 mb-12">
     Admin Dashboard
   </h1>
@@ -12,7 +11,7 @@
     </h2>
 
     <div class="grid-responsive">
-      <article *ngFor="let s of pendingSightings()" class="let" class="card relative">
+      <article *ngFor="let s of pendingSightings()" class="card relative">
         <img [src]="s.imageUrl" [alt]="s.title" class="card-img">
         <div class="card-body">
           <h3 class="card-title">{{ s.title }}</h3>
@@ -37,25 +36,26 @@
     </div>
   </section>
 
-  <!-- Offline / Local Sightings -->
+  <!-- Approved Sightings -->
   <section class="section">
     <h2 class="section-title">
-      Offline Sightings ({{ localSightings().length }})
+      Approved Sightings ({{ approvedSightings().length }})
     </h2>
 
     <div class="grid-responsive">
-      <article *ngFor="let s of localSightings()" class="card relative">
-        <div class="badge-offline">OFFLINE</div>
+      <article *ngFor="let s of approvedSightings()" class="card relative">
         <img [src]="s.imageUrl" [alt]="s.title" class="card-img">
         <div class="card-body">
           <h3 class="card-title">{{ s.title }}</h3>
-          <p class="card-text">{{ s.description }}</p>
-          <button (click)="uploadSighting(s)" class="btn btn-primary btn-lg w-full mt-6">
-            Upload Now
-          </button>
+          <p class="card-text mb-4">{{ s.description }}</p>
+          <p class="text-sm text-gray-500 mb-1">
+            <strong>Location:</strong> {{ s.locationName || 'Unknown' }}
+          </p>
+          <p class="text-sm text-gray-500">
+            <strong>Spotted:</strong> {{ s.sightedAt | date:'medium' }}
+          </p>
         </div>
       </article>
     </div>
   </section>
-
 </div>

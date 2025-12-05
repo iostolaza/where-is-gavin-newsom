@@ -4,7 +4,7 @@
 # 1. Stage all changes
 git add .
 git status
-git commit -m "Post and signing component"
+git commit -m "Commit before changes"
 git push origin main
 
 # See what changed
@@ -49,6 +49,7 @@ lsof -i :4200 | grep LISTEN | awk '{print $2}' | xargs kill -9 2>/dev/null || tr
 
 # Step 2: Nuclear clean (removes broken deps)
 rm -rf node_modules package-lock.json
+rm -rf node_modules package-lock.json
 
 # Step 3: Update global Angular CLI to v20 first
 npm uninstall -g @angular/cli
@@ -73,3 +74,4 @@ ng serve --open
 
 # Remove old floating button from AppComponent
 sed -i '' '/<app-post-button>/d' src/app/app.component.html
+

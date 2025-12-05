@@ -1,12 +1,13 @@
+// file: src/environments/environment.prod.ts
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
-    apiKey: "REPLACE_WITH_YOUR_KEY",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project",
-    storageBucket: "your-project.appspot.com",
+    apiKey: "AIzaSyCyVcOnzG2MJuvgG5q3T7OWUmimpotBsVE",
+    authDomain: "myauroraswift.firebaseapp.com",
+    projectId: "myauroraswift",
+    storageBucket: "myauroraswift.appspot.com",
     messagingSenderId: "123456789",
     appId: "1:123456789:web:abc123"
   },
-  googleMapsApiKey: "REPLACE_WITH_YOUR_GOOGLE_MAPS_KEY"
+  googleMapsApiKey: "AIzaSyCyVcOnzG2MJuvgG5q3T7OWUmimpotBsVE"
 };

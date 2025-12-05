@@ -1,3 +1,4 @@
+// file: src/app/features/home/home.component.ts
 import { SearchDropdownComponent } from "../../shared/components/search-dropdown/search-dropdown.component";
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -27,8 +28,6 @@ export class HomeComponent implements OnInit {
   latest$: Observable<Sighting | null> = of(null);
   sightings$: Observable<Sighting[]> = of([]);
   selectedSighting: Sighting | null = null;
-
-  constructor() {}
 
   ngOnInit() {
     this.loadTestData();

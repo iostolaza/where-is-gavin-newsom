@@ -1,28 +1,42 @@
 // file: src/app/core/services/sighting.service.ts
-import { Injectable } from '@angular/core';
-import { collection, collectionData, Firestore, addDoc } from '@angular/fire/firestore'; 
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, collectionData, doc, addDoc, updateDoc, deleteDoc, query, where } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { Sighting } from '../../shared/models/sighting.model';
 
 @Injectable({ providedIn: 'root' })
 export class SightingService {
-  
-  constructor(private firestore: Firestore) {}
+  private firestore = inject(Firestore);
+  private col = collection(this.firestore, 'sightings');
 
   getApprovedSightings(): Observable<Sighting[]> {
-    // Replace with real query later
-    return collectionData(collection(this.firestore, 'sightings'), { idField: 'id' }) as Observable<Sighting[]>;
+    return collectionData(
+      query(this.col, where('isApproved', '==', true)),
+      { idField: 'id' }
+    ) as Observable<Sighting[]>;
   }
 
   getPendingSightings(): Observable<Sighting[]> {
-    return of([]); 
+    return collectionData(
+      query(this.col, where('isApproved', '==', false)),
+      { idField: 'id' }
+    ) as Observable<Sighting[]>;
   }
 
-  async createPendingSighting(sighting: Sighting): Promise<void> {
-
-     console.log('API: Creating cloud sighting:', sighting);
-     return;
+  async createPendingSighting(sighting: Partial<Sighting>): Promise<void> {
+    await addDoc(this.col, {
+      ...sighting,
+      isApproved: false,
+      createdAt: new Date(),
+      sightedAt: new Date()
+    });
   }
-  
 
+  async approveSighting(id: string): Promise<void> {
+    await updateDoc(doc(this.firestore, 'sightings', id), { isApproved: true });
+  }
+
+  async rejectSighting(id: string): Promise<void> {
+    await deleteDoc(doc(this.firestore, 'sightings', id));
+  }
 }

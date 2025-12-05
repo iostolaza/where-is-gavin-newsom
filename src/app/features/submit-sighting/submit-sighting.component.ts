@@ -1,35 +1,34 @@
 // file: src/app/features/submit-sighting/submit-sighting.component.ts
-import { Component, signal, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { NgIf } from '@angular/common'; 
-import { LocalDataService } from '../../core/services/local-data.service';
+import { Component, signal, inject, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { NgIf } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 import { SightingService } from '../../core/services/sighting.service';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { Sighting } from '../../shared/models/sighting.model';
 
 @Component({
   selector: 'app-submit-sighting',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf], 
-  templateUrl: './submit-sighting.component.html', 
+  imports: [ReactiveFormsModule, NgIf],
+  templateUrl: './submit-sighting.component.html',
   styleUrls: ['./submit-sighting.component.scss'],
 })
-export class SubmitSightingComponent {
+export class SubmitSightingComponent implements OnInit {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private sightingService = inject(SightingService);
-  private localDataService = inject(LocalDataService);
   private router = inject(Router);
   private toast = inject(HotToastService);
 
   loading = signal(false);
   positionError = signal<string | null>(null);
 
-  form = this.fb.group({
+  form: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(10)]],
     description: ['', [Validators.required, Validators.minLength(20)]],
-    imageUrl: ['', Validators.required], 
+    imageUrl: ['', Validators.required],
     lat: [0, Validators.required],
     lng: [0, Validators.required],
     locationName: [''],
@@ -38,7 +37,7 @@ export class SubmitSightingComponent {
   ngOnInit() {
     this.getCurrentLocation();
   }
-  
+
   private getCurrentLocation() {
     if (!window.navigator.geolocation) {
       this.positionError.set('Geolocation not supported');
@@ -64,7 +63,7 @@ export class SubmitSightingComponent {
     const data = await res.json();
     this.form.patchValue({ locationName: data.display_name });
   }
-  
+
   async submit() {
     if (this.form.invalid) return;
 
@@ -75,26 +74,28 @@ export class SubmitSightingComponent {
     }
 
     this.loading.set(true);
-        const newSighting = {
-      ...this.form.getRawValue(),
+
+    const rawValue = this.form.getRawValue();
+    const newSighting: Partial<Sighting> = {
+      title: rawValue.title || undefined,
+      description: rawValue.description || undefined,
+      lat: rawValue.lat || undefined,
+      lng: rawValue.lng || undefined,
+      locationName: rawValue.locationName || undefined,
+      imageUrl: rawValue.imageUrl || undefined,
       userId: this.auth.user()!.id,
       sightedAt: new Date(),
       createdAt: new Date(),
-      isApproved: false,
-      isLocal: false,
-      imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1600',
-    } as any; 
+      isApproved: false
+    };
 
     try {
       await this.sightingService.createPendingSighting(newSighting);
       this.toast.success('Sighting submitted for review!');
       this.router.navigate(['/']);
     } catch (e) {
-      this.toast.error('Cloud submission failed – saved locally');
-      
-      const localSighting = { ...newSighting, isLocal: true };
-      await this.localDataService.saveSighting(localSighting);
-      
+      this.toast.error('Submission failed — please try again');
+      console.error(e);
     } finally {
       this.loading.set(false);
     }
