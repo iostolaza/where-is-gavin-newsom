@@ -4,7 +4,7 @@
 # 1. Stage all changes
 git add .
 git status
-git commit -m "reCommit before map update"
+git commit -m "Commit before map update"
 git push origin main
 
 # See what changed
