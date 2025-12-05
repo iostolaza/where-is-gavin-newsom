@@ -6,11 +6,10 @@ import { Sighting } from '../../shared/models/sighting.model';
 import { SightingService } from '../../core/services/sighting.service';
 
 @Component({
-  selector: 'app-admin',
-  standalone: true,
-  imports: [CommonModule, DatePipe],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+    selector: 'app-admin',
+    imports: [CommonModule, DatePipe],
+    templateUrl: './admin-dashboard.component.html',
+    styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
   private sightingService = inject(SightingService);

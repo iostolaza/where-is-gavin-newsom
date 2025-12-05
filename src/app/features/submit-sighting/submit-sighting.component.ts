@@ -9,11 +9,10 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Sighting } from '../../shared/models/sighting.model';
 
 @Component({
-  selector: 'app-submit-sighting',
-  standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
-  templateUrl: './submit-sighting.component.html',
-  styleUrls: ['./submit-sighting.component.scss'],
+    selector: 'app-submit-sighting',
+    imports: [ReactiveFormsModule, NgIf],
+    templateUrl: './submit-sighting.component.html',
+    styleUrls: ['./submit-sighting.component.scss']
 })
 export class SubmitSightingComponent implements OnInit {
   private fb = inject(FormBuilder);

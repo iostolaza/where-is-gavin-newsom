@@ -5,11 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
-  selector: 'app-sign-in',
-  standalone: true,
-  imports: [],
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+    selector: 'app-sign-in',
+    imports: [],
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
   private auth = inject(AuthService);

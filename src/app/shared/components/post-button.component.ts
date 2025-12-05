@@ -5,10 +5,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
-  selector: 'app-post-button',
-  standalone: true,
-  imports: [],
-  templateUrl: './post-button.component.html',
+    selector: 'app-post-button',
+    imports: [],
+    templateUrl: './post-button.component.html'
 })
 export class PostButtonComponent {
   private router = inject(Router);

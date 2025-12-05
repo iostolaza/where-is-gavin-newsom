@@ -4,7 +4,7 @@
 # 1. Stage all changes
 git add .
 git status
-git commit -m "Commit before changes"
+git commit -m "reCommit before changes"
 git push origin main
 
 # See what changed

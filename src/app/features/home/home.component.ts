@@ -8,11 +8,10 @@ import { Sighting } from '../../shared/models/sighting.model';
 import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, SearchDropdownComponent, GoogleMap, MapInfoWindow, MapMarker, TimeAgoPipe],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    imports: [CommonModule, SearchDropdownComponent, GoogleMap, MapInfoWindow, MapMarker, TimeAgoPipe],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   mapCenter: google.maps.LatLngLiteral = { lat: 36.7783, lng: -119.4179 };
